@@ -1,9 +1,9 @@
 public class Book {
 
-    private String title;
-    private String author;
-    private String ISBN;
-    private boolean available;
+    public String title;
+    public String author;
+    public String ISBN;
+    public boolean available;
 
     public String getTitle() {
         return title;

@@ -5,19 +5,23 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        System.out.println("**********************************************");
         System.out.println("Type 1 to add a book to the library.");
         System.out.println("Type 2 to remove a book from the library.");
         System.out.println("Type 3 to see all the books of our library.");
+        System.out.println("Type 4 to take a book from the library.");
+        System.out.println("Type 5 to return a book you took to the library.");
+        System.out.println("**********************************************");
 
         int choice = 50;
         Library library = new Library();
-
 
         while(choice != 0){
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("Welcome to our library, please enter the function's number that you want to do: ");
             choice = scanner.nextInt();
+
 
             if (choice == 1){
 
@@ -35,10 +39,16 @@ public class Main {
 
                 library.getBooks();
 
+            } else if (choice == 4) {
+
+                library.takeBook();
+
+            } else if (choice == 5){
+
+                library.returnBook();
+
             }else {
-
-                System.out.println("Error");
-
+                System.out.println("->Invalid keystroke.");
             }
 
         }
