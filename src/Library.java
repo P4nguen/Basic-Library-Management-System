@@ -1,8 +1,19 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Library {
     ArrayList<Book> allLibraryBooks = new ArrayList<Book>();
+
+    String filePath = "C:\\Users\\emirs\\IdeaProjects\\LibraryData.txt";
+
+    // Specify the string you want to write to the file
+
+
+
     void addBook(){
 
         Scanner scanner = new Scanner(System.in);
@@ -15,6 +26,22 @@ public class Library {
         Book book = new Book(title, author, ISBN, available);
 
         allLibraryBooks.add(book);
+
+        try {
+            // Create a FileWriter object with the file path
+            FileWriter writer = new FileWriter(filePath);
+
+            // Write the string to the file
+            writer.write(book.getTitle() + "-" + book.getAuthor() + "-" + book.getISBN() + "-" + book.isAvailable() + "\n");
+
+            // Close the FileWriter to release resources
+            writer.close();
+
+            System.out.println("String has been written to the file.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
