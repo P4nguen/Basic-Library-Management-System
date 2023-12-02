@@ -37,7 +37,7 @@ public class Library {
             // Close the FileWriter to release resources
             writer.close();
 
-            System.out.println("String has been written to the file.");
+            System.out.println("Book is added to the library.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,11 +70,12 @@ public class Library {
         for (int i=0; i < allLibraryBooks.size(); i++){
 
             System.out.println("*****************************");
-            System.out.println(allLibraryBooks.get(i).getTitle());
-            System.out.println(allLibraryBooks.get(i).getAuthor());
-            System.out.println(allLibraryBooks.get(i).getISBN());
-            System.out.println(allLibraryBooks.get(i).isAvailable());
+            System.out.println("Title: " + allLibraryBooks.get(i).getTitle());
+            System.out.println("Author: " + allLibraryBooks.get(i).getAuthor());
+            System.out.println("ISBN: " + allLibraryBooks.get(i).getISBN());
+            System.out.println("Availability: " + allLibraryBooks.get(i).isAvailable());
             System.out.println("*****************************");
+            System.out.println(" ");
 
         }
 

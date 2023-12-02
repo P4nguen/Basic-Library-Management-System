@@ -19,7 +19,7 @@ public class Main {
         while(choice != 0){
 
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Welcome to our library, please enter the function's number that you want to do: ");
+            System.out.println("Please enter a function number: ");
             choice = scanner.nextInt();
 
 
