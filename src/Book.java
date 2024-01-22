@@ -5,6 +5,13 @@ public class Book {
     public String ISBN;
     public boolean available;
 
+    public Book(String title, String author, String ISBN, boolean available) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.available = available;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -37,10 +44,4 @@ public class Book {
         this.available = available;
     }
 
-    public Book(String title, String author, String ISBN, boolean available) {
-        this.title = title;
-        this.author = author;
-        this.ISBN = ISBN;
-        this.available = available;
-    }
 }

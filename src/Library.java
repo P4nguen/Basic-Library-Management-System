@@ -8,40 +8,25 @@ import java.util.Scanner;
 public class Library {
     ArrayList<Book> allLibraryBooks = new ArrayList<Book>();
 
-    String filePath = "C:\\Users\\emirs\\IdeaProjects\\LibraryData.txt";
-
-    // Specify the string you want to write to the file
-
-
-
     void addBook(){
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Name of the Book: ");
         String title = scanner.nextLine();
+
+        System.out.println("Name of the Author: ");
         String author = scanner.nextLine();
+
+        System.out.println("Enter the ISBN value: ");
         String ISBN = scanner.nextLine();
+
+        System.out.println("Is the book available(true or false): ");
         boolean available = scanner.hasNextBoolean();
 
         Book book = new Book(title, author, ISBN, available);
 
         allLibraryBooks.add(book);
-
-        try {
-            // Create a FileWriter object with the file path
-            FileWriter writer = new FileWriter(filePath);
-
-            // Write the string to the file
-            writer.write(book.getTitle() + "-" + book.getAuthor() + "-" + book.getISBN() + "-" + book.isAvailable() + "\n");
-
-            // Close the FileWriter to release resources
-            writer.close();
-
-            System.out.println("Book is added to the library.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -87,13 +72,13 @@ public class Library {
         String selection = "";
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Which book do you want to take from our library? (Please enter the ISBN value)");
+        System.out.println("Which book do you want to take from our library?");
         selection = scanner.next();
 
 
         for (int i=0; i < allLibraryBooks.size(); i++){
 
-            if(allLibraryBooks.get(i).getISBN().equals(selection)){
+            if(allLibraryBooks.get(i).getTitle().equals(selection)){
 
                 System.out.printf("For how long will you be taking the book: %s (%s)?(14 days max)\n", selection, allLibraryBooks.get(i).getTitle());
                 duration = scanner.nextInt();
