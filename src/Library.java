@@ -30,7 +30,7 @@ public class Library {
         Book book = new Book(title, author, ISBN, available);
         allLibraryBooks.add(book);
 
-        System.out.printf("->%s (s) with ISBN %s added successfully.%n", book.getTitle(), book.getAuthor(), book.getISBN());
+        System.out.printf("->%s (%s) with ISBN %s added successfully.%n", book.getTitle(), book.getAuthor(), book.getISBN());
     }
 
     void removeBook(String ISBN){
