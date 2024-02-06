@@ -22,7 +22,7 @@ public class Main {
 
         int choice = 50;
         Library library = new Library();
-        Map<String, User> users = new HashMap<>();
+        Map<String, User> users = library.users;
         Scanner scanner = new Scanner(System.in);
 
         while(choice != 0){

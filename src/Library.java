@@ -52,7 +52,6 @@ public class Library {
             System.out.println("Availability: " + book.isAvailable());
             System.out.println("*****************************");
             System.out.println(" ");
-
         }
     }
 
@@ -83,6 +82,7 @@ public class Library {
 
         System.out.printf("For how long will you be taking the book: %s (%s)? (14 days max)%n", selection, selectedBook.getTitle());
         duration = scanner.nextInt();
+        scanner.nextLine();
 
         if (duration <= 14) {
             System.out.printf("You have taken the book '%s' successfully for %d days.%n", selectedBook.getTitle(), duration);
@@ -99,41 +99,79 @@ public class Library {
 
 
 
-    void returnBook(Map<String, User> users){
-
-        int duration = 0;
+    void returnBook(Map<String, User> users) {
         String selection = "";
+        String userId = "";
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Which user are you? Please enter your ID: ");
+        userId = scanner.nextLine();
+
+        // Check if the user exists
+        if (!users.containsKey(userId)) {
+            System.out.println("User not found.");
+            return;
+        }
+
+        boolean hasBorrowedBooks = false;
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            if (borrowedBook.userId.equals(userId)) {
+                Book book = findBookByISBN(borrowedBook.ISBN);
+                System.out.printf("->Borrowed: %s (%s), ISBN: %s%n", book.getTitle(), book.getAuthor(), book.getISBN());
+                System.out.println("*****************************");
+                hasBorrowedBooks = true;
+            }
+        }
+
+        if (!hasBorrowedBooks) {
+            System.out.printf("User %s has no books to return!%n", userId);
+            return;
+        }
 
         System.out.println("Please enter the ISBN Value of the book you want to return: ");
         selection = scanner.next();
-        System.out.println("For how many days you've had the book?");
-        duration = scanner.nextInt();
 
-        for (Book book : allLibraryBooks) {
-            if (book.getISBN().equals(selection)){
-                book.setAvailable(true);
-                if (duration > 14){
-                    float dailyFee = 0.25F;
-                    float result;
-
-                    System.out.println("You've had the book for more than 14 days so you will have a fee.");
-
-                    result = dailyFee*(duration-14);
-
-                    if (result < 0){
-                        System.out.println("Invalid duration time.");
-                    }else {
-                        System.out.printf("Your fee is %.2f dollars%n",result);
-                    }
-
-
-                }else {
-                    System.out.printf("You have successfully returned the book %s after %d days%n", selection, duration);
-                }
+        // Find the borrowed book and remove it
+        BorrowedBook bookToRemove = null;
+        for (BorrowedBook borrowedBook : borrowedBooks) {
+            if (borrowedBook.userId.equals(userId) && borrowedBook.ISBN.equals(selection)) {
+                bookToRemove = borrowedBook;
+                break;
             }
         }
+
+        if (bookToRemove == null) {
+            System.out.println("Book not found.");
+            return;
+        }
+
+        borrowedBooks.remove(bookToRemove);
+
+        // Set the availability of the book to true
+        Book bookReturned = findBookByISBN(selection);
+        if (bookReturned != null) {
+            bookReturned.setAvailable(true);
+            System.out.printf("You have successfully returned the book %s (%s)%n", bookReturned.getTitle(), bookReturned.getISBN());
+        } else {
+            System.out.println("Book not found.");
+        }
+
+        System.out.println("For how many days you've had the book?");
+        int duration = scanner.nextInt();
+
+        if (duration > 14) {
+            float dailyFee = 0.25F;
+            float result = dailyFee * (duration - 14);
+            if (result < 0) {
+                System.out.println("Invalid duration time.");
+            } else {
+                System.out.printf("Your fee is %.2f dollars%n", result);
+            }
+        } else {
+            System.out.printf("You have successfully returned the book %s after %d days%n", selection, duration);
+        }
     }
+
 
     void addUser() {
         Scanner scanner = new Scanner(System.in);
@@ -150,7 +188,7 @@ public class Library {
         User user = new User(userId, name, role);
         users.put(userId, user);
 
-        System.out.printf("%s %s (%s) added successfully!%n",users.get(userId).getRole() ,users.get(userId).getName(), userId);
+        System.out.printf("->%s %s (%s) added successfully!%n",users.get(userId).getRole() ,users.get(userId).getName(), userId);
     }
 
     void removeUser() {
@@ -180,17 +218,16 @@ public class Library {
 
     void printUsers() {
         for (Map.Entry<String, User> entry : users.entrySet()) {
-            String userID = entry.getKey();
+            String userId = entry.getKey();
             User user = entry.getValue();
-            System.out.printf("User ID: %s, Name: %s, Role: %s%n", userID, user.getName(), user.getRole());
-
+            System.out.printf("User ID: %s, Name: %s, Role: %s%n", userId, user.getName(), user.getRole());
             for (BorrowedBook borrowedBook : borrowedBooks) {
-                if (borrowedBook.userId.equals(userID)) {
+                if (borrowedBook.userId.equals(userId)) {
                     Book book = findBookByISBN(borrowedBook.ISBN);
-                    System.out.printf("->Books Borrowed: %s (%s)%n", book.getTitle(), book.getAuthor());
-                    System.out.println("*****************************");
+                    System.out.printf("->Borrowed: %s (%s) ->ISBN: %s%n", book.getTitle(), book.getAuthor(), book.getISBN());
                 }
             }
+            System.out.println("*****************************");
         }
     }
 
