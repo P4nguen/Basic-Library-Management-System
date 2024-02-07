@@ -36,8 +36,7 @@ public class Main {
                     library.addBook();
                     break;
                 case 2:
-                    String userInput = scanner.next();
-                    library.removeBook(userInput);
+                    library.removeBook();
                     break;
                 case 3:
                     library.getBooks();

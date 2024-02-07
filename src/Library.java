@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Library implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -31,12 +28,30 @@ public class Library implements Serializable {
         System.out.printf("->%s (%s) with ISBN %s added successfully.%n", book.getTitle(), book.getAuthor(), book.getISBN());
     }
 
-    void removeBook(String ISBN){
-        for (int  i=0; i < allLibraryBooks.size(); i++){
-            if (allLibraryBooks.get(i).getISBN().equals(ISBN)){
-                allLibraryBooks.remove(allLibraryBooks.get(i));
-                System.out.printf("->The book %s (%s) was deleted successfully.%n",allLibraryBooks.get(i).getTitle(), allLibraryBooks.get(i).getISBN());
+    void removeBook() {
+
+        for(Book book : allLibraryBooks){
+            System.out.println("->Title: " + book.getTitle());
+            System.out.println("->ISBN: " + book.getISBN());
+            System.out.println("***************");
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the ISBN of the book you want to remove:");
+        String choice = scanner.nextLine();
+
+        boolean bookRemoved = false;
+        for (Book book : allLibraryBooks) {
+            if (book.getISBN().equals(choice)) {
+                allLibraryBooks.remove(book);
+                System.out.printf("The book %s (%s) was deleted successfully.%n", book.getTitle(), book.getISBN());
+                bookRemoved = true;
+                break; // Exit the loop once a match is found and removed
             }
+        }
+
+        if (!bookRemoved) {
+            System.out.println("No book found with ISBN: " + choice);
         }
     }
 
@@ -94,8 +109,6 @@ public class Library implements Serializable {
             System.out.println("You can't take the book for more than 14 days.");
         }
     }
-
-
 
     void returnBook(Map<String, User> users) {
         String selection = "";
@@ -191,6 +204,13 @@ public class Library implements Serializable {
 
     void removeUser() {
         Scanner scanner = new Scanner(System.in);
+
+        for (Map.Entry<String, User> entry : users.entrySet()) {
+            String userId = entry.getKey();
+            User user = entry.getValue();
+            System.out.printf("User ID: %s, Name: %s, Role: %s%n", userId, user.getName(), user.getRole());
+            System.out.println("***************");
+        }
 
         System.out.println("Enter user ID to remove: ");
         String userId = scanner.nextLine();
