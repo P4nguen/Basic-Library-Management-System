@@ -3,7 +3,7 @@ Project Start: A basic library system where you can use the system via terminalI
 
 I finally made a version of my library system where my system is not basic anymore. Now you can add and remove users which was quite challenging for me, also you can see which user borrowed which book. I am now working on making this work with actual time (To measure how many days a user had that book) and of course most importantly a saving system which saves all the data of the users and books, so wish me luck!
 
-It was suprisingly fast but,we can now save our librarys data. It feels realy good to come this far, but I think I should add the time feature now and than maybe I can make a GUI for my system.
+It was suprisingly fast but, we can now save our librarys data. It feels realy good to come this far, but I think I should add the time feature now and than maybe I can make a GUI for my system.
 
 Future Goals: GUI for the system
 
