@@ -1,13 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Library {
+public class Library implements Serializable {
+    private static final long serialVersionUID = 1L;
     ArrayList<Book> allLibraryBooks = new ArrayList<Book>();
     ArrayList<BorrowedBook> borrowedBooks = new ArrayList<BorrowedBook>();
     Map<String, User> users = new HashMap<String, User>();
