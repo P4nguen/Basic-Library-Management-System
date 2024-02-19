@@ -37,34 +37,39 @@ public class Library implements Serializable {
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter the ISBN of the book you want to remove:");
+        System.out.println("You pressed 2, Do you really want to remove a Book? (Y/N)");
         String choice = scanner.nextLine();
+        if(choice.equalsIgnoreCase("y")) {
+            System.out.println("Enter the ISBN of the book you want to remove:");
+            String ISBNselection = scanner.nextLine();
 
-        boolean bookRemoved = false;
-        for (Book book : allLibraryBooks) {
-            if (book.getISBN().equals(choice)) {
-                allLibraryBooks.remove(book);
-                System.out.printf("The book %s (%s) was deleted successfully.%n", book.getTitle(), book.getISBN());
-                bookRemoved = true;
-                break; // Exit the loop once a match is found and removed
+            boolean bookRemoved = false;
+            for (Book book : allLibraryBooks) {
+                if (book.getISBN().equals(ISBNselection)) {
+                    allLibraryBooks.remove(book);
+                    System.out.printf("The book %s (%s) was deleted successfully.%n", book.getTitle(), book.getISBN());
+                    bookRemoved = true;
+                    break; // Exit the loop once a match is found and removed
+                }
             }
-        }
 
-        if (!bookRemoved) {
-            System.out.println("No book found with ISBN: " + choice);
+            if (!bookRemoved) {
+                System.out.println("No book found with ISBN: " + choice);
+            }
+        }else if(choice.equalsIgnoreCase("n")){
+            System.out.println("Returning to the menu...");
+            return;
         }
     }
 
     void getBooks(){
+        System.out.println("*************************");
         for (Book book : allLibraryBooks){
-
-            System.out.println("*****************************");
             System.out.println("Title: " + book.getTitle());
             System.out.println("Author: " + book.getAuthor());
             System.out.println("ISBN: " + book.getISBN());
             System.out.println("Availability: " + book.isAvailable());
-            System.out.println("*****************************");
-            System.out.println(" ");
+            System.out.println("*************************");
         }
     }
 
@@ -190,6 +195,11 @@ public class Library implements Serializable {
         System.out.println("Enter the ID of the user: ");
         String userId = scanner.nextLine();
 
+        if(users.containsKey(userId)){
+            System.out.println("You can't add the same user twice!");
+            return;
+        }
+
         System.out.println("Enter the NAME of the user: ");
         String name = scanner.nextLine();
 
@@ -199,27 +209,37 @@ public class Library implements Serializable {
         User user = new User(userId, name, role);
         users.put(userId, user);
 
-        System.out.printf("->%s %s (%s) added successfully!%n",users.get(userId).getRole() ,users.get(userId).getName(), userId);
+        System.out.printf("->%s %s (%s) added successfully!%n",users.get(userId).getRole(), users.get(userId).getName(), userId);
     }
 
     void removeUser() {
         Scanner scanner = new Scanner(System.in);
 
-        for (Map.Entry<String, User> entry : users.entrySet()) {
-            String userId = entry.getKey();
-            User user = entry.getValue();
-            System.out.printf("User ID: %s, Name: %s, Role: %s%n", userId, user.getName(), user.getRole());
-            System.out.println("***************");
-        }
+        System.out.println("You've pressed 7, Do you really want to remove a User? (Y/N)");
+        String choice = scanner.nextLine();
 
-        System.out.println("Enter user ID to remove: ");
-        String userId = scanner.nextLine();
+        if (choice.equalsIgnoreCase("y")) {
 
-        if(users.containsKey(userId)){
-            users.remove(userId);
-            System.out.println("User removed successfully!(" + userId + ")");
-        }else{
-            System.out.println("No user found with ID: " + userId);
+            System.out.println("*************************************************");
+            for (Map.Entry<String, User> entry : users.entrySet()) {
+                String userId = entry.getKey();
+                User user = entry.getValue();
+                System.out.printf("User ID: %s, Name: %s, Role: %s%n", userId, user.getName(), user.getRole());
+                System.out.println("*************************************************");
+            }
+
+            System.out.println("Enter user ID to remove: ");
+            String userId = scanner.nextLine();
+
+            if (users.containsKey(userId)) {
+                System.out.printf("User %s (%s) removed successfully!%n", userId, users.get(userId).getName());
+                users.remove(userId);
+            } else {
+                System.out.println("No user found with ID: " + userId);
+            }
+        }else if(choice.equalsIgnoreCase("n")){
+            System.out.println("Returning to the menu...");
+            return;
         }
 
     }
@@ -235,6 +255,7 @@ public class Library implements Serializable {
     }
 
     void printUsers() {
+        System.out.println("*************************************************");
         for (Map.Entry<String, User> entry : users.entrySet()) {
             String userId = entry.getKey();
             User user = entry.getValue();
@@ -245,7 +266,7 @@ public class Library implements Serializable {
                     System.out.printf("->Borrowed: %s (%s) ->ISBN: %s%n", book.getTitle(), book.getAuthor(), book.getISBN());
                 }
             }
-            System.out.println("*****************************");
+            System.out.println("*************************************************");
         }
     }
 
